@@ -4,10 +4,9 @@ namespace Jl.FFmpegUtils.Providers.Xabe;
 
 public record XabeMediaInfo : IMediaInfo
 {
-    private readonly global::Xabe.FFmpeg.IMediaInfo mediaInfo;
     public XabeMediaInfo(IMediaSource source, global::Xabe.FFmpeg.IMediaInfo mediaInfo)
     {
-        (Source, this.mediaInfo) = (source, mediaInfo);
+        (Source, Duration, Size, CreationTime) = (source, mediaInfo.Duration, mediaInfo.Size, mediaInfo.CreationTime);
         Streams = mediaInfo.Streams.Select(x => XabeMediaStream.Create(source, x)).ToImmutableArray();
         VideoStreams = Streams.OfType<IVideoStream>().ToImmutableArray();
         AudioStreams = Streams.OfType<IAudioStream>().ToImmutableArray();
@@ -15,6 +14,9 @@ public record XabeMediaInfo : IMediaInfo
         DataStreams = Streams.OfType<IDataStream>().ToImmutableArray();
     }
     public IMediaSource Source { get; }
+    public TimeSpan Duration { get; }
+    public long Size { get; }
+    public DateTime? CreationTime { get; }
     public IReadOnlyList<IMediaStream> Streams { get; }
     public IReadOnlyList<IVideoStream> VideoStreams { get; }
     public IReadOnlyList<IAudioStream> AudioStreams { get; }
