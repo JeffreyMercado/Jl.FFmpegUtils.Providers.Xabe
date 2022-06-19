@@ -11,7 +11,6 @@ public record XabeMediaInfo : IMediaInfo
         VideoStreams = Streams.OfType<IVideoStream>().ToImmutableArray();
         AudioStreams = Streams.OfType<IAudioStream>().ToImmutableArray();
         SubtitleStreams = Streams.OfType<ISubtitleStream>().ToImmutableArray();
-        DataStreams = Streams.OfType<IDataStream>().ToImmutableArray();
     }
     public IMediaSource Source { get; }
     public TimeSpan Duration { get; }
@@ -21,5 +20,4 @@ public record XabeMediaInfo : IMediaInfo
     public IReadOnlyList<IVideoStream> VideoStreams { get; }
     public IReadOnlyList<IAudioStream> AudioStreams { get; }
     public IReadOnlyList<ISubtitleStream> SubtitleStreams { get; }
-    public IReadOnlyList<IDataStream> DataStreams { get; }
 }
