@@ -6,7 +6,7 @@ public record XabeMediaInfo : IMediaInfo
 {
     public XabeMediaInfo(IMediaSource source, global::Xabe.FFmpeg.IMediaInfo mediaInfo)
     {
-        (Source, Duration, Size, CreationTime) = (source, mediaInfo.Duration, mediaInfo.Size, mediaInfo.CreationTime);
+        (Source, Size, Duration, CreationTime) = (source, mediaInfo.Size, mediaInfo.Duration, mediaInfo.CreationTime);
         var streams = ImmutableArray.CreateBuilder<IMediaStream>();
         var videoStreams = ImmutableArray.CreateBuilder<IVideoStream>();
         var audioStreams = ImmutableArray.CreateBuilder<IAudioStream>();
@@ -36,8 +36,8 @@ public record XabeMediaInfo : IMediaInfo
         SubtitleStreams = subtitleStreams.ToImmutable();
     }
     public IMediaSource Source { get; }
-    public TimeSpan Duration { get; }
     public long Size { get; }
+    public TimeSpan Duration { get; }
     public DateTime? CreationTime { get; }
     public IReadOnlyList<IMediaStream> Streams { get; }
     public IReadOnlyList<IVideoStream> VideoStreams { get; }
