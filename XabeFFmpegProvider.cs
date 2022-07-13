@@ -29,7 +29,10 @@ public class XabeFFmpegProvider : IFFmpegProvider
         try
         {
             // Xabe uses captured context, need to fix that
-            var result = await Task.Run(() => conversion.Start(arguments, cancellationToken)).ConfigureAwait(false);
+            var result = await Task.Run(async () =>
+                await conversion.Start(arguments, cancellationToken).ConfigureAwait(false),
+                cancellationToken
+            ).ConfigureAwait(false);
             outputDataObserver.OnCompleted();
             return new XabeConversionResult(result.StartTime, result.EndTime);
         }
